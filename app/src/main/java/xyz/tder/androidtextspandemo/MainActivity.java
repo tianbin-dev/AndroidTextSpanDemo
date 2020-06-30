@@ -2,8 +2,8 @@ package xyz.tder.androidtextspandemo;
 
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.widget.TextView;
@@ -28,8 +28,12 @@ public class MainActivity extends AppCompatActivity {
     private void initTextSpan1() {
         TextView tvSameHeightSpan = findViewById(R.id.tv_span1);
         SpannableString spannableString = new SpannableString("我是哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
-        TagSpan tagSpan2 = new TagSpan(Paint.Style.STROKE, redColor, redColor, sp2px(16), 3, 10, 10, 10);
-        spannableString.setSpan(tagSpan2, 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        TagSpan tagSpan = new TagSpan(Paint.Style.STROKE, redColor, redColor, sp2px(16), 3, 10, 10, 10);
+        spannableString.setSpan(tagSpan, 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        TagSpan tagSpan1 = new TagSpan(Paint.Style.STROKE, redColor, redColor, sp2px(16), 3, 10, 10, 10);
+        spannableString.setSpan(tagSpan1, 7, 18, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         tvSameHeightSpan.setText(spannableString);
     }
 

@@ -32,10 +32,6 @@ public class TagSpan extends ReplacementSpan {
         this(tagStyle, tagTextColor, tagBackgroundColor, textSizePx, radiusPx, 0, 0, 0);
     }
 
-    TagSpan(Paint.Style tagStyle, int tagTextColor, int tagBackgroundColor, int textSizePx, int radiusPx, int rightMarginPx) {
-        this(tagStyle, tagTextColor, tagBackgroundColor, textSizePx, radiusPx, rightMarginPx, 0, 0);
-    }
-
     TagSpan(Paint.Style tagStyle, int tagTextColor, int tagBackgroundColor, int textSizePx, int radiusPx, int rightMarginPx, int textLeftPadding, int textRightPadding) {
         this(tagStyle, tagTextColor, tagBackgroundColor, textSizePx, radiusPx, rightMarginPx, textLeftPadding, textRightPadding, 0, 0);
     }
@@ -61,6 +57,10 @@ public class TagSpan extends ReplacementSpan {
         mTagPaint.setTextAlign(Paint.Align.CENTER);
     }
 
+    TagSpan(Paint.Style tagStyle, int tagTextColor, int tagBackgroundColor, int textSizePx, int radiusPx, int rightMarginPx) {
+        this(tagStyle, tagTextColor, tagBackgroundColor, textSizePx, radiusPx, rightMarginPx, 0, 0);
+    }
+
     @Override
     public int getSize(@NonNull Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
         mSize = (int) mTagPaint.measureText(text, start, end) + mRightMarginPx + mTextLeftPadding + mTextRightPadding;
@@ -71,7 +71,7 @@ public class TagSpan extends ReplacementSpan {
     public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint) {
         RectF rect = createRect(x, y, paint);
         drawTagRect(canvas, paint, rect);
-        drawTagText(canvas, text, start, end, rect);
+        drawTagText(canvas, text, start, end, x, y, rect);
     }
 
     private RectF createRect(float x, int y, Paint paint) {
@@ -89,14 +89,14 @@ public class TagSpan extends ReplacementSpan {
         paint.setAntiAlias(true);
 
         paint.setStyle(mTagStyle);
-        canvas.drawRoundRect(rect, mRadiusPx, mRadiusPx, paint);
+        canvas.drawRoundRect(rect, 20, 20, paint);
     }
 
-    private void drawTagText(Canvas canvas, CharSequence text, int start, int end, RectF rect) {
+    private void drawTagText(Canvas canvas, CharSequence text, int start, int end, float x, int y, RectF rect) {
 
 
         Paint.FontMetricsInt tagFontMetrics = mTagPaint.getFontMetricsInt();
-        final float textCenterX = (rect.right - rect.left) / 2;
+        final float textCenterX = x + (rect.right - rect.left) / 2;
         final float rectCenterY = rect.bottom - (rect.bottom - rect.top) / 2;
         final float tagBaseLineY = rectCenterY + (tagFontMetrics.descent - tagFontMetrics.ascent) / 2f - tagFontMetrics.descent;
 
